@@ -7,6 +7,38 @@
     <title>Test</title>
 <script defer src="main.js"></script></head>
 <body>
-    <h1>Hello World!</h1>
+    <header>
+        <h1>Leaderboard</h1>
+    </header>
+    <main>
+        <!-- Recent scores Section -->
+        <section id="scores">
+            <div class="table-title">
+                <h3>Recent scores</h3>
+                <button type="button" id="refresh">Refresh</button>
+            </div>
+            <table>
+                <tbody id="table">
+
+                </tbody>                
+            </table>
+        </section>
+
+        <!-- Form Section -->
+        <section id="add">
+            <h3>Add your score</h3>
+            <div class="gray-line"></div>
+            <form id="add-form" class="add-form" action="" method="">
+				<label for="name">
+					<input type="text" name="name" id="name" class="add-form__input" placeholder="Your name" required>
+				</label>
+				<label for="score">
+					<input type="text" name="score" id="score" class="add-form__input" placeholder="Your score" required>
+				</label>
+				<button type="button" id="add-button">Add</button>
+				<div id="error"></div>
+			</form>
+        </section>
+    </main>
 </body>
 </html>
