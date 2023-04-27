@@ -1,0 +1,171 @@
+/* Global Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+html {
+  box-sizing: border-box;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+
+  /* outline: 1px solid red !important; */
+}
+
+:root {
+  --text: #30343b;
+  --button: #36b37f;
+  --refresh: #4f29f0;
+  --background: #e8e8e8;
+  --row: #dbdde7;
+  --font: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: var(--background);
+  font-family: var(--font);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  padding: 3vh;
+}
+
+.gray-line {
+  width: 5rem;
+  height: 0.2rem;
+  background-color: gray;
+}
+
+/* Text styles */
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+  padding: 3vh;
+}
+
+h3 {
+  font-size: 1.15rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
+/* Sections - General styles */
+
+main {
+  display: flex;
+  flex-direction: row;
+}
+
+section#scores,
+section#add {
+  display: inherit;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 3vw;
+  align-items: center;
+  width: 35vw;
+}
+
+button[type=button] {
+  height: 2.7rem;
+  padding: 0.9rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+/* Recent scores */
+
+div.table-title,
+tbody#table {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+section table {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  background-color: #f1f1f1;
+  margin-top: 1rem;
+}
+
+tr:nth-child(even) {
+  background-color: var(--row);
+}
+
+#table td,
+#table tr {
+  width: 100%;
+  text-align: left;
+  padding: 0.35em;
+}
+
+button#refresh {
+  width: auto;
+  background-color: var(--button);
+}
+
+/* Form */
+
+#add-form {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+#add-form label {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#add-form input[type=text] {
+  width: 100%;
+  padding: 0.9rem 1.5rem 0.9rem 0.9rem;
+  margin-bottom: 0.7rem;
+  font-family: var(--font);
+  font-style: italic;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  backface-visibility: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+#add-form input[type=text]:focus {
+  outline: none;
+  border: 1px solid #949494;
+}
+
+#add-form button[type=button] {
+  width: 100%;
+  background-color: var(--button);
+}
+
+#error {
+  font-weight: 500;
+  color: #ff6163;
+  padding-top: 1rem;
+  align-self: flex-end;
+}
