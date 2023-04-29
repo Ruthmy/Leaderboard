@@ -14,14 +14,11 @@ html {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
-
-  /* outline: 1px solid red !important; */
 }
 
 :root {
   --text: #30343b;
   --button: #36b37f;
-  --refresh: #4f29f0;
   --background: #e8e8e8;
   --row: #dbdde7;
   --font: 'Montserrat', sans-serif;
