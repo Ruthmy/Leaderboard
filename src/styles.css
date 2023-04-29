@@ -104,12 +104,14 @@ tbody#table {
   width: 100%;
 }
 
-section table {
+section #table {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
   background-color: #f1f1f1;
   margin-top: 1rem;
+  overflow-y: auto;
+  max-height: 20rem;
 }
 
 tr:nth-child(even) {
