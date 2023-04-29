@@ -5,6 +5,7 @@
 const addButton = document.getElementById('add-button');
 const refreshButton = document.getElementById('refresh');
 const errorElement = document.getElementById('error');
+const input = document.getElementById('score');
 
 // Set the url for the API
 const urlAPI = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/70QsvE9IJA28aqxujmzJ/scores/';
@@ -20,7 +21,7 @@ const reloadPage = () => {
 
 const renderScores = (data) => {
   let scoreRow = '';
-  data.result.forEach((element) => {
+  data.result.sort((a, b) => b.score - a.score).forEach((element) => {
     scoreRow += `
     <tr class="row">
       <td><p>${element.user}: ${element.score}</p></td>
@@ -98,15 +99,27 @@ function addScore(user, score) {
 
 // Buttons functionality ----------------------------------------------------------------------
 
-// Add score when form is submitted
-addButton.addEventListener('click', (event) => {
-  event.preventDefault();
+// capture and send the arguments
+const addEvent = () => {
   const user = document.querySelector('#user').value;
   const score = document.querySelector('#score').value;
   addScore(user, score);
   setTimeout(() => {
     reloadPage();
   }, 2000);
+};
+
+// Add score when form is submitted
+addButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  addEvent();
+});
+
+// Add a new score when user hit enter key
+input.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    addEvent();
+  }
 });
 
 refreshButton.addEventListener('click', () => {
