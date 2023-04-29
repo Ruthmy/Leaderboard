@@ -1,33 +1,95 @@
-// Test scores
+/* eslint object-shorthand: [2, "consistent"] */
+/* eslint-env es6 */
 
 // Get HTML elements
 const addButton = document.getElementById('add-button');
+const refreshButton = document.getElementById('refresh');
 const errorElement = document.getElementById('error');
+const input = document.getElementById('score');
 
-const scores = [
-  { name: 'John Doe', score: 100 },
-  { name: 'Jane Smith', score: 80 },
-  { name: 'Bob Johnson', score: 60 },
-];
+// Set the url for the API
+const urlAPI = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/70QsvE9IJA28aqxujmzJ/scores/';
+
+// Functions to reload the page ----------------------------------------------------------------
+
+const reloadPage = () => {
+  document.getElementById('add-form').reset();
+  window.location.reload();
+};
+
+// Render results ------------------------------------------------------------------------------
+
+const renderScores = (data) => {
+  let scoreRow = '';
+  data.result.sort((a, b) => b.score - a.score).forEach((element) => {
+    scoreRow += `
+    <tr class="row">
+      <td><p>${element.user}: ${element.score}</p></td>
+    </tr>
+  `;
+  });
+
+  // call the father element and insert the data
+  const section = document.getElementById('table');
+  section.innerHTML = scoreRow;
+};
+
+const getData = async (callback) => {
+  try {
+    const response = await fetch(
+      urlAPI,
+      {
+        method: 'GET',
+      },
+    );
+    const data = await response.json();
+    return callback(data);
+  } catch (error) {
+    return error;
+  }
+};
+
+getData(renderScores);
+
+// Saving data --------------------------------------------------------------------------------
 
 // Add a new score to the table
+function addScore(user, score) {
+  if (user !== '' && score !== '') {
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
 
-function addScore(name, score) {
-  if (name !== '' && score !== '') {
-    // Logic for save the score
+    const raw = JSON.stringify({
+      user: user,
+      score: score,
+    });
+
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch(urlAPI, requestOptions)
+      .then((response) => response.text())
+      .catch((error) => error);
+
+    setTimeout(() => {
+      reloadPage();
+    }, 2000);
   } else {
     const messages = [];
-    if (name === '' && score === '') {
+    if (user === '' && score === '') {
       messages.push('Please enter the name and score of the participant.');
-    } else if (score === '' && name !== '') {
+    } else if (score === '' && user !== '') {
       messages.push('Please enter the participant\'s name');
-    } else if (name === '' && score !== '') {
+    } else if (user === '' && score !== '') {
       messages.push('Please enter the participant\'s score');
     }
 
     if (messages.length > 0) {
       errorElement.innerText = messages.join(', ');
-      // Remove the message after 3 seconds
       setTimeout(() => {
         errorElement.remove();
       }, 3000);
@@ -35,26 +97,31 @@ function addScore(name, score) {
   }
 }
 
+// Buttons functionality ----------------------------------------------------------------------
+
+// capture and send the arguments
+const addEvent = () => {
+  const user = document.querySelector('#user').value;
+  const score = document.querySelector('#score').value;
+  addScore(user, score);
+  setTimeout(() => {
+    reloadPage();
+  }, 2000);
+};
+
 // Add score when form is submitted
 addButton.addEventListener('click', (event) => {
   event.preventDefault();
-  const name = document.querySelector('#name').value;
-  const score = document.querySelector('#score').value;
-  addScore(name, score);
-  // To display the score
+  addEvent();
 });
 
-let scoreRow = '';
-
-scores.forEach((element) => {
-  scoreRow += `
-    <tr class="row">
-      <td><p>${element.name}: ${element.score}</p></td>
-    </tr>
-  `;
+// Add a new score when user hit enter key
+input.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    addEvent();
+  }
 });
 
-// call the father element
-const section = document.getElementById('table');
-
-section.innerHTML = scoreRow;
+refreshButton.addEventListener('click', () => {
+  reloadPage();
+});
